@@ -34,9 +34,9 @@ console.error('Connecting to serial port');
 var serialPort = new SerialPort(config.serialPort, {
   baudrate: 9600,
   parser: serialport.parsers.readline("\n")
-});
+}, false);
 
-serialPort.on("open", function () {
+function onOpen() {
   console.error('Serial port connected');
   serialPort.write('1');
   serialPort.on('data', function(data) {
@@ -64,4 +64,24 @@ serialPort.on("open", function () {
       console.log(JSON.stringify(result));
     }
   });
-});
+}
+
+function onError(err) {
+  console.error('Error connecting, retrying in 5 seconds...');
+  setTimeout(function() {serialPort.open()}, 5000)
+}
+
+function onClose() {
+  console.error('Connection closed, retrying in 5 seconds...');
+  setTimeout(openSerial, 5000)
+}
+
+function openSerial() {
+  serialPort.on("open", onOpen);
+  serialPort.on('error', onError);
+  serialPort.on('close', onClose);
+
+  serialPort.open();
+}
+
+openSerial();
