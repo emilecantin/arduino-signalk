@@ -1,0 +1,14 @@
+{
+  "name": "arduino-signalk",
+  "version": "1.0.0",
+  "description": "Interface sensors connected to an Arduino to a SignalK server.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Emile Cantin",
+  "license": "MIT",
+  "dependencies": {
+    "serialport": "^2.0.6"
+  }
+}
